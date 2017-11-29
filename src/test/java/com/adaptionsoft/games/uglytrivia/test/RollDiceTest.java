@@ -11,6 +11,7 @@ public class RollDiceTest {
             public TestableGame() {
                 super();
                 add("::irrelevant player name::");
+                places[0] = 0;
             }
 
             @Override
