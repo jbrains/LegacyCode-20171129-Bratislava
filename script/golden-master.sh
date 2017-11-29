@@ -18,4 +18,5 @@ fi
 for seed in {28172..28172}
 do
   runGame "$seed" "${output_root_path}${output_directory}game-${seed}.txt"
+  diff -r "${output_root_path}golden-master" "${output_root_path}golden-master-run"
 done
