@@ -8,10 +8,10 @@ public class RollDiceTest {
     @Test
     public void howTheFirstPlayerMovesOnTheFirstTurnRolling1() throws Exception {
         class TestableGame extends Game {
-            public TestableGame() {
+            public TestableGame(final int startingPlaceOfFirstPlayer) {
                 super();
                 add("::irrelevant player name::");
-                places[0] = 0;
+                places[0] = startingPlaceOfFirstPlayer;
             }
 
             @Override
@@ -24,7 +24,7 @@ public class RollDiceTest {
             }
         }
 
-        final TestableGame game = new TestableGame();
+        final TestableGame game = new TestableGame(0);
         game.roll(1);
         Assert.assertEquals(1, game.findPlaceForPlayer(0));
     }
