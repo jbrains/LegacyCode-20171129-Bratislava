@@ -22,7 +22,7 @@ public class RollDiceTest {
                 return places[playerIndex];
             }
         }
-        
+
         final TestableGame game = new TestableGame();
         game.roll(1);
         Assert.assertEquals(1, game.findPlaceForPlayer(0));
