@@ -10,30 +10,48 @@ public class GoldenMasterGameRunner {
     private static boolean notAWinner;
 
     public static void main(String[] args) {
-        final long seed = parseSeed(args);
-        printTestRunMetadata(seed);
+        final GoldenMasterGameRunnerArguments goldenMasterGameRunnerArguments = parseArguments(args);
+        final long sampleSize = goldenMasterGameRunnerArguments.sampleSize;
 
-        Game aGame = new Game();
+        for (long i = 0; i < sampleSize; i++) {
+            final long seed = goldenMasterGameRunnerArguments.seed + i;
+            printTestRunMetadata(seed);
 
-        aGame.add("Chet");
-        aGame.add("Pat");
-        aGame.add("Sue");
+            Game aGame = new Game();
 
-        Random rand = seed < 0 ? new Random() : new Random(seed);
+            aGame.add("Chet");
+            aGame.add("Pat");
+            aGame.add("Sue");
 
-        do {
+            Random rand = new Random(seed);
 
-            aGame.roll(rand.nextInt(5) + 1);
+            do {
 
-            if (rand.nextInt(9) == 7) {
-                notAWinner = aGame.wrongAnswer();
-            } else {
-                notAWinner = aGame.wasCorrectlyAnswered();
-            }
+                aGame.roll(rand.nextInt(5) + 1);
+
+                if (rand.nextInt(9) == 7) {
+                    notAWinner = aGame.wrongAnswer();
+                } else {
+                    notAWinner = aGame.wasCorrectlyAnswered();
+                }
 
 
-        } while (notAWinner);
+            } while (notAWinner);
+        }
+    }
 
+    private static GoldenMasterGameRunnerArguments parseArguments(final String[] args) {
+        final long seed = parseLong(args, 0, -1L);
+        final long sampleSize = parseLong(args, 1, 1L);
+        return new GoldenMasterGameRunnerArguments(seed, sampleSize);
+    }
+
+    private static long parseLong(final String[] args, final int index, final long valueIfAbsent) {
+        try {
+            return Long.parseLong(args[index], 10);
+        } catch (RuntimeException oops) {
+            return valueIfAbsent;
+        }
     }
 
     private static void printTestRunMetadata(final long seed) {
@@ -42,13 +60,17 @@ public class GoldenMasterGameRunner {
         System.out.println("---");
     }
 
-    private static long parseSeed(final String[] args) {
-        final long seed;
-        if (args.length > 0) {
-            seed = Long.parseLong(args[0], 10);
-        } else {
-            seed = -1L;
+    private static class GoldenMasterGameRunnerArguments {
+        public final long seed;
+        public final long sampleSize;
+
+        public GoldenMasterGameRunnerArguments(final long seed, final long sampleSize) {
+            this.seed = seed;
+            this.sampleSize = sampleSize;
         }
-        return seed;
+
+        public boolean hasSeed() {
+            return seed >= 0;
+        }
     }
 }
