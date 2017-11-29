@@ -11,20 +11,21 @@ function runGame() {
 output_root_path="./src/test/data"
 if [[ "generate" == "$1" ]]
 then
-  for seed in {28172..28172}
+  for seed in {28172..29172}
   do
     runGame "$seed" "${output_root_path}/golden-master/game-${seed}.txt"
     echo "Generated new golden master output."
   done
 elif [[ "check" == "$1" ]]
 then
-  for seed in {28172..28172}
+  rm -fr "${output_root_path}/golden-master-run/*"
+  for seed in {28172..29172}
   do
     runGame "$seed" "${output_root_path}/golden-master-run/game-${seed}.txt"
     echo "Checking golden master output."
-    diff -r "${output_root_path}/golden-master" "${output_root_path}/golden-master-run"
-    if [[ "$?" == 0 ]]; then echo "OK."; else echo "Differences detected."; fi
   done
+  diff -r "${output_root_path}/golden-master" "${output_root_path}/golden-master-run"
+  if [[ "$?" == 0 ]]; then echo "OK."; else echo "Differences detected."; fi
 else
   echo You must specify either ''check'' or ''generate'' as the first parameter to this program.
 fi
