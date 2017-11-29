@@ -8,6 +8,11 @@ public class RollDiceTest {
     @Test
     public void iHaveNoIdea() throws Exception {
         class TestableGame extends Game {
+            public TestableGame() {
+                super();
+                add("::irrelevant player name::");
+            }
+
             @Override
             protected void reportMessage(final String message) {
                 // Shut up.
@@ -17,8 +22,8 @@ public class RollDiceTest {
                 return places[playerIndex];
             }
         }
+        
         final TestableGame game = new TestableGame();
-        game.add("::irrelevant player name::");
         game.roll(1);
         Assert.assertEquals(1, game.findPlaceForPlayer(0));
     }
