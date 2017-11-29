@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class RollDiceTest {
     @Test
-    public void iHaveNoIdea() throws Exception {
+    public void howTheFirstPlayerMovesOnTheFirstTurn() throws Exception {
         class TestableGame extends Game {
             public TestableGame() {
                 super();
