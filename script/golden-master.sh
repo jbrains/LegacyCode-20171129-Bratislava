@@ -11,7 +11,7 @@ function runGame() {
 
 output_root_path="./src/test/data"
 seed="28172"
-sample_size="1000"
+sample_size="10000"
 if [[ "generate" == "$1" ]]
 then
   runGame "$seed" "$sample_size" "${output_root_path}/golden-master/games-${seed}-${sample_size}.txt"
