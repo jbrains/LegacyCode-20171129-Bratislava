@@ -22,11 +22,15 @@ public class RollDiceTest {
             public int findPlaceForPlayer(int playerIndex) {
                 return places[playerIndex];
             }
+
+            public int findPlaceForTheOnlyPlayer() {
+                return findPlaceForPlayer(0);
+            }
         }
 
         final TestableGame game = new TestableGame(0);
         game.roll(1);
-        Assert.assertEquals(1, game.findPlaceForPlayer(0));
+        Assert.assertEquals(1, game.findPlaceForTheOnlyPlayer());
     }
 
     @Test
