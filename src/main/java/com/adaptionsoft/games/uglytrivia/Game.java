@@ -41,19 +41,23 @@ public class Game {
 	    places[howManyPlayers()] = 0;
 	    purses[howManyPlayers()] = 0;
 	    inPenaltyBox[howManyPlayers()] = false;
-	    
-	    System.out.println(playerName + " was added");
-	    System.out.println("They are player number " + players.size());
+
+		reportMessage(playerName + " was added");
+		reportMessage("They are player number " + players.size());
 		return true;
 	}
-	
+
+	protected void reportMessage(final String message) {
+		System.out.println(message);
+	}
+
 	public int howManyPlayers() {
 		return players.size();
 	}
 
 	public void roll(int roll) {
-		System.out.println(players.get(currentPlayer) + " is the current player");
-		System.out.println("They have rolled a " + roll);
+		reportMessage(players.get(currentPlayer) + " is the current player");
+		reportMessage("They have rolled a " + roll);
 		
 		if (inPenaltyBox[currentPlayer]) {
 			if (roll % 2 != 0) {
@@ -78,10 +82,10 @@ public class Game {
 			places[currentPlayer] = places[currentPlayer] + roll;
 			if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
 			
-			System.out.println(players.get(currentPlayer) 
+			reportMessage(players.get(currentPlayer)
 					+ "'s new location is " 
 					+ places[currentPlayer]);
-			System.out.println("The category is " + currentCategory());
+			reportMessage("The category is " + currentCategory());
 			askQuestion();
 		}
 		
@@ -89,13 +93,13 @@ public class Game {
 
 	private void askQuestion() {
 		if (currentCategory() == "Pop")
-			System.out.println(popQuestions.removeFirst());
+			reportMessage((String) popQuestions.removeFirst());
 		if (currentCategory() == "Science")
-			System.out.println(scienceQuestions.removeFirst());
+			reportMessage((String) scienceQuestions.removeFirst());
 		if (currentCategory() == "Sports")
-			System.out.println(sportsQuestions.removeFirst());
+			reportMessage((String) sportsQuestions.removeFirst());
 		if (currentCategory() == "Rock")
-			System.out.println(rockQuestions.removeFirst());		
+			reportMessage((String) rockQuestions.removeFirst());
 	}
 	
 	
