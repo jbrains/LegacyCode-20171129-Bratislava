@@ -10,21 +10,16 @@ function runGame() {
 }
 
 output_root_path="./src/test/data"
+seed="28172"
 if [[ "generate" == "$1" ]]
 then
-  for seed in {28172..29172}
-  do
-    runGame "$seed" "1" "${output_root_path}/golden-master/game-${seed}.txt"
-    echo "Generated new golden master output."
-  done
+  runGame "$seed" "1000" "${output_root_path}/golden-master/games-${seed}-1000.txt"
+  echo "Generated new golden master output."
 elif [[ "check" == "$1" ]]
 then
   rm -fr "${output_root_path}/golden-master-run/*"
-  for seed in {28172..29172}
-  do
-    runGame "$seed" "1" "${output_root_path}/golden-master-run/game-${seed}.txt"
-    echo "Checking golden master output."
-  done
+  runGame "$seed" "1000" "${output_root_path}/golden-master-run/games-${seed}-1000.txt"
+  echo "Checking golden master output."
   diff -r "${output_root_path}/golden-master" "${output_root_path}/golden-master-run"
   if [[ "$?" == 0 ]]; then echo "OK."; else echo "Differences detected."; fi
 else
