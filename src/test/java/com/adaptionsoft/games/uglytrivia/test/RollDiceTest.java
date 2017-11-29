@@ -36,9 +36,10 @@ public class RollDiceTest {
     @Test
     public void howTheFirstPlayerMovesOnTheFirstTurnRolling6() throws Exception {
         class TestableGame extends Game {
-            public TestableGame() {
+            public TestableGame(final int startingPlaceOfFirstPlayer) {
                 super();
                 add("::irrelevant player name::");
+                places[0] = startingPlaceOfFirstPlayer;
             }
 
             @Override
@@ -49,10 +50,14 @@ public class RollDiceTest {
             public int findPlaceForPlayer(int playerIndex) {
                 return places[playerIndex];
             }
+
+            public int findPlaceForTheOnlyPlayer() {
+                return findPlaceForPlayer(0);
+            }
         }
 
-        final TestableGame game = new TestableGame();
+        final TestableGame game = new TestableGame(0);
         game.roll(6);
-        Assert.assertEquals(6, game.findPlaceForPlayer(0));
+        Assert.assertEquals(6, game.findPlaceForTheOnlyPlayer());
     }
 }
