@@ -143,6 +143,7 @@ public class Game {
         isGettingOutOfPenaltyBox = true;
     }
 
+    // REFACTOR This looks like part of a Rule-type class
     private boolean getsOutOfThePenaltyBoxWhenRolling(final int roll) {
         return roll % 2 != 0;
     }
