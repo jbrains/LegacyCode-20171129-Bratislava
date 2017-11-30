@@ -173,6 +173,8 @@ public class Game {
                 giveCurrentPlayerAGoldCoin();
                 reportPlayerHasGoldCoins((String) players.get(currentPlayer), purses[currentPlayer]);
 
+                // REFACTOR Temporal coupling: advanceToNextPlayer() writes
+                // to shared memory and didPlayerWin() reads from it.
                 boolean winner = didPlayerWin();
                 advanceToNextPlayer();
                 return winner;
@@ -185,6 +187,8 @@ public class Game {
             giveCurrentPlayerAGoldCoin();
             reportPlayerHasGoldCoins((String) players.get(currentPlayer), purses[currentPlayer]);
 
+            // REFACTOR Temporal coupling: advanceToNextPlayer() writes
+            // to shared memory and didPlayerWin() reads from it.
             boolean winner = didPlayerWin();
             advanceToNextPlayer();
             return winner;
@@ -221,10 +225,13 @@ public class Game {
 
     public boolean wrongAnswer() {
         onPlayerAnsweredQuestionIncorrectly((String) players.get(currentPlayer));
-        inPenaltyBox[currentPlayer] = true;
-
+        putCurrentPlayerInThePenaltyBox();
         advanceToNextPlayer();
         return true;
+    }
+
+    private void putCurrentPlayerInThePenaltyBox() {
+        inPenaltyBox[currentPlayer] = true;
     }
 
     private void onPlayerAnsweredQuestionIncorrectly(final String players) {
