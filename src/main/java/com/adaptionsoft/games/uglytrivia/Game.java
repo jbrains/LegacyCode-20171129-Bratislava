@@ -1,6 +1,7 @@
 package com.adaptionsoft.games.uglytrivia;
 
 import io.vavr.collection.HashMap;
+import io.vavr.collection.List;
 import io.vavr.collection.Map;
 import io.vavr.collection.Queue;
 
@@ -181,16 +182,12 @@ public class Game {
     }
 
     public static String findCategoryNameByPlace(final int place) {
-        if (place == 0) return "Pop";
-        if (place == 4) return "Pop";
-        if (place == 8) return "Pop";
-        if (place == 1) return "Science";
-        if (place == 5) return "Science";
-        if (place == 9) return "Science";
-        if (place == 2) return "Sports";
-        if (place == 6) return "Sports";
-        if (place == 10) return "Sports";
-        return "Rock";
+        if (place >= 0 && place < 12) {
+            return List.of("Pop", "Science", "Sports", "Rock").get(place % 4);
+        }
+        else {
+            return "Rock";
+        }
     }
 
     public boolean wasCorrectlyAnswered() {
