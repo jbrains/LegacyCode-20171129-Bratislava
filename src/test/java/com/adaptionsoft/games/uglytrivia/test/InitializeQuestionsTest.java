@@ -1,7 +1,6 @@
 package com.adaptionsoft.games.uglytrivia.test;
 
 import com.adaptionsoft.games.uglytrivia.Game;
-import com.adaptionsoft.games.uglytrivia.GameWithInspectableQuestionDecks;
 import com.adaptionsoft.games.uglytrivia.StandardQuestions;
 import io.vavr.collection.Map;
 import io.vavr.collection.Queue;
