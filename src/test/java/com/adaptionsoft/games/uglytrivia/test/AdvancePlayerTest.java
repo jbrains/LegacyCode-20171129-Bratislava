@@ -13,10 +13,11 @@ public class AdvancePlayerTest {
         // The Board is circular with 12 squares
         theOnlyPlayerShouldAdvanceByRoll(8, 6, 2);
         theOnlyPlayerShouldAdvanceByRoll(0, 12, 0);
+        // MISTAKE!
+        theOnlyPlayerShouldAdvanceByRoll(3, 29, 8);
     }
 
     private void theOnlyPlayerShouldAdvanceByRoll(final int startingPlace, final int roll, final int expectedEndingPlace) {
-        final int[] newPlaces = Game.newPlacesAfterAdvancingPlayerBy(roll, 0, new int[]{startingPlace});
-        Assert.assertEquals(List.of(expectedEndingPlace), List.ofAll(newPlaces));
+        Assert.assertEquals(expectedEndingPlace, Game.advancePlayerAroundBoardBy(startingPlace, roll));
     }
 }

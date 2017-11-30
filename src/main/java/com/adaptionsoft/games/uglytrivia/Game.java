@@ -135,9 +135,12 @@ public class Game {
     }
 
     public static int[] newPlacesAfterAdvancingPlayerBy(final int roll, final int playerIndex, final int[] places) {
-        places[playerIndex] = places[playerIndex] + roll;
-        if (places[playerIndex] > 11) places[playerIndex] = places[playerIndex] - 12;
+        places[playerIndex] = advancePlayerAroundBoardBy(places[playerIndex], roll);
         return places;
+    }
+
+    public static int advancePlayerAroundBoardBy(final int fromPlace, final int roll) {
+        return (fromPlace + roll) % 12;
     }
 
     private void onPlayerGettingOutOfThePenaltyBox(final String playerName) {
