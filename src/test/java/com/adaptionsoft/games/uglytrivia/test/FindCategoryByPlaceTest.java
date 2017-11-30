@@ -1,7 +1,7 @@
 package com.adaptionsoft.games.uglytrivia.test;
 
 import com.adaptionsoft.games.uglytrivia.Game;
-import io.vavr.*;
+import io.vavr.Function1;
 import io.vavr.collection.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,18 +9,10 @@ import org.junit.Test;
 public class FindCategoryByPlaceTest {
     @Test
     public void happyPaths() throws Exception {
-        checkCategoryByPlace("Pop", 0);
-        checkCategoryByPlace("Science", 1);
-        checkCategoryByPlace("Sports", 2);
-        checkCategoryByPlace("Rock", 3);
-        checkCategoryByPlace("Pop", 4);
-        checkCategoryByPlace("Science", 5);
-        checkCategoryByPlace("Sports", 6);
-        checkCategoryByPlace("Rock", 7);
-        checkCategoryByPlace("Pop", 8);
-        checkCategoryByPlace("Science", 9);
-        checkCategoryByPlace("Sports", 10);
-        checkCategoryByPlace("Rock", 11);
+        List.of(0, 4, 8).map(expectPlaceToBeInCategory("Pop"));
+        List.of(1, 5, 9).map(expectPlaceToBeInCategory("Science"));
+        List.of(2, 6, 10).map(expectPlaceToBeInCategory("Sports"));
+        List.of(3, 7, 11).map(expectPlaceToBeInCategory("Rock"));
     }
 
     @Test
@@ -31,12 +23,9 @@ public class FindCategoryByPlaceTest {
     }
 
     private Function1<Integer, Boolean> expectPlaceToBeInCategory(final String categoryName) {
-        return ((Function2<String, Integer, Boolean>) this::checkCategoryByPlace).curried()
-                .apply(categoryName);
-    }
-
-    private boolean checkCategoryByPlace(final String expectedCategoryName, final int place) {
-        Assert.assertEquals(expectedCategoryName, Game.findCategoryNameByPlace(place));
-        return true;
+        return (place) -> {
+            Assert.assertEquals(categoryName, Game.findCategoryNameByPlace(place));
+            return true;
+        };
     }
 }
