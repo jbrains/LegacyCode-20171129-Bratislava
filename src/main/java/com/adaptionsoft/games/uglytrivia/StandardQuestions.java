@@ -35,14 +35,7 @@ public class StandardQuestions {
     public LinkedList convertSafelyToLegacyQuestionDeck(final String categoryName) {
         return new LinkedList(
                 questionDecks.get(categoryName)
-                        .getOrElseThrow(missingQuestionDeckError("Pop"))
-                        .toJavaList());
-    }
-
-    private Supplier<RuntimeException> missingQuestionDeckError(final String missingCategoryName) {
-        return () -> new RuntimeException(String.format(
-                "Missing question deck for category '%s'. Only found these categories: %s.",
-                questionDecks.keySet(), missingCategoryName));
+                        .getOrElse(Queue.empty()).toJavaList());
     }
 
     public Map<String, Queue<String>> getQuestionDecks() {

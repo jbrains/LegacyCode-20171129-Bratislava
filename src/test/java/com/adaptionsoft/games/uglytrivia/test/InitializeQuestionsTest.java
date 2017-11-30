@@ -2,6 +2,7 @@ package com.adaptionsoft.games.uglytrivia.test;
 
 import com.adaptionsoft.games.uglytrivia.Game;
 import com.adaptionsoft.games.uglytrivia.StandardQuestions;
+import io.vavr.collection.HashMap;
 import io.vavr.collection.Map;
 import io.vavr.collection.Queue;
 import org.junit.Assert;
@@ -35,5 +36,13 @@ public class InitializeQuestionsTest {
         Assert.assertEquals(
                 new Game().getQuestionDecks().mapValues(Queue::toJavaList),
                 new Game(standardQuestions.getQuestionDecks()).getLegacyQuestionDecks());
+    }
+
+    @Test
+    public void legacyQuestionDecksMatchNewQuestionsDecksWhenNotTheStandardQuestions() throws Exception {
+        final HashMap<String, Queue<String>> questionDecks = HashMap.of("Rock", Queue.of("::first question in Rock category::"));
+        Assert.assertEquals(
+                new Game(questionDecks).getQuestionDecks().mapValues(Queue::toJavaList),
+                new Game(questionDecks).getLegacyQuestionDecks());
     }
 }
