@@ -156,10 +156,6 @@ public class Game {
         reportMessage("They have rolled a " + roll);
     }
 
-    private void onTurnStarted(final String currentPlayerName) {
-        reportCurrentPlayerName(currentPlayerName);
-    }
-
     private void reportCurrentPlayerName(final String currentPlayerName) {
         reportMessage(currentPlayerName + " is the current player");
     }
