@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Game {
-    private final Map<String, Queue<String>> nakedQuestionDecks;
+    private final QuestionDecks questionDecks;
+    
     protected int[] places = new int[6];
     ArrayList players = new ArrayList();
     int[] purses = new int[6];
@@ -22,14 +23,12 @@ public class Game {
 
     int currentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
-    private QuestionDecks questionDecks;
 
     public Game() {
         this(new StandardQuestions().getQuestionDecks());
     }
 
     public Game(final Map<String, Queue<String>> nakedQuestionDecks) {
-        this.nakedQuestionDecks = nakedQuestionDecks;
         this.questionDecks = new QuestionDecks(nakedQuestionDecks);
         this.popQuestions = questionDecks.convertSafelyToLegacyQuestionDeck("Pop");
         this.sportsQuestions = questionDecks.convertSafelyToLegacyQuestionDeck("Sports");
@@ -271,6 +270,6 @@ public class Game {
     }
 
     public Map<String, Queue<String>> getQuestionDecks() {
-        return nakedQuestionDecks;
+        return questionDecks.getQuestionDecks();
     }
 }

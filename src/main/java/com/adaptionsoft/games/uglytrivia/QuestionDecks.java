@@ -6,7 +6,7 @@ import io.vavr.collection.Queue;
 import java.util.LinkedList;
 
 public class QuestionDecks {
-    public final Map<String, Queue<String>> questionDecks;
+    private final Map<String, Queue<String>> questionDecks;
 
     public QuestionDecks(final Map<String, Queue<String>> questionDecks) {
         this.questionDecks = questionDecks;
