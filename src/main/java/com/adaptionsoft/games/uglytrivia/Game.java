@@ -134,7 +134,7 @@ public class Game {
         places = newPlacesAfterAdvancingPlayerBy(roll, currentPlayer, places);
     }
 
-    private int[] newPlacesAfterAdvancingPlayerBy(final int roll, final int playerIndex, final int[] places) {
+    public static int[] newPlacesAfterAdvancingPlayerBy(final int roll, final int playerIndex, final int[] places) {
         places[playerIndex] = places[playerIndex] + roll;
         if (places[playerIndex] > 11) places[playerIndex] = places[playerIndex] - 12;
         return places;
