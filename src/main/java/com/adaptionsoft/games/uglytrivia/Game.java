@@ -1,9 +1,14 @@
 package com.adaptionsoft.games.uglytrivia;
 
+import io.vavr.collection.HashMap;
+import io.vavr.collection.Map;
+import io.vavr.collection.Queue;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Game {
+    private final Map<String, Queue<String>> questionDecks;
     protected int[] places = new int[6];
     ArrayList players = new ArrayList();
     int[] purses = new int[6];
@@ -18,19 +23,28 @@ public class Game {
     boolean isGettingOutOfPenaltyBox;
 
     public Game() {
-        initializeQuestionDecks();
+        this(new StandardQuestions().getQuestionDecks());
     }
 
-    // REFACTOR Either make this static or move it out of the constructor.
-    private void initializeQuestionDecks() {
-        for (int i = 0; i < 50; i++) {
-            popQuestions.addLast("Pop Question " + i);
-            scienceQuestions.addLast(("Science Question " + i));
-            sportsQuestions.addLast(("Sports Question " + i));
-            rockQuestions.addLast(createRockQuestion(i));
-        }
+    public Game(final Map<String, Queue<String>> questionDecks) {
+        this.questionDecks = questionDecks;
+        this.popQuestions = new StandardQuestions().convertSafelyToLegacyQuestionDeck("Pop");
+        this.sportsQuestions = new StandardQuestions().convertSafelyToLegacyQuestionDeck("Sports");
+        this.scienceQuestions = new StandardQuestions().convertSafelyToLegacyQuestionDeck("Science");
+        this.rockQuestions = new StandardQuestions().convertSafelyToLegacyQuestionDeck("Rock");
     }
 
+    public Map<String, LinkedList<String>> getLegacyQuestionDecks() {
+        // SMELL Depends on package-level fields in superclass
+        return HashMap.of(
+                "Pop", popQuestions,
+                "Rock", rockQuestions,
+                "Science", scienceQuestions,
+                "Sports", sportsQuestions
+        );
+    }
+
+    /** @deprecated Scheduled for removal 2018-05-31 */
     public String createRockQuestion(int index) {
         return "Rock Question " + index;
     }
@@ -242,5 +256,9 @@ public class Game {
 
     private boolean didPlayerWin() {
         return !(purses[currentPlayer] == 6);
+    }
+
+    public Map<String, Queue<String>> getQuestionDecks() {
+        return questionDecks;
     }
 }
