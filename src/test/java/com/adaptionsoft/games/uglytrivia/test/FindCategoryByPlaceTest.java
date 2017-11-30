@@ -17,6 +17,7 @@ public class FindCategoryByPlaceTest {
 
     @Test
     public void currentBehaviorOutsideTheRange() throws Exception {
+        // REFACTOR This behavior becomes undefined on 2018-06-30.
         List.of(12, 13, 14, 15, 28, 30, 21376, 238476, -1, -2, -3, -4, -23746).map(
                 expectPlaceToBeInCategory("Rock")
         );
