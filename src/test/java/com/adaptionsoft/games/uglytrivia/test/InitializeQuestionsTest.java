@@ -40,9 +40,14 @@ public class InitializeQuestionsTest {
 
     @Test
     public void legacyQuestionDecksMatchNewQuestionsDecksWhenNotTheStandardQuestions() throws Exception {
-        final HashMap<String, Queue<String>> questionDecks = HashMap.of("Rock", Queue.of("::first question in Rock category::"));
+        final HashMap<String, Queue<String>> questionDecks
+                = HashMap.of("Rock", Queue.of("::first question in Rock category::"));
+
+        // SMELL We should check only the Rock category, because we didn't
+        // supply questions for all the "standard" game categories.
+        // This disappears when the legacy question deck fields disappear.
         Assert.assertEquals(
-                new Game(questionDecks).getQuestionDecks().mapValues(Queue::toJavaList),
-                new Game(questionDecks).getLegacyQuestionDecks());
+                new Game(questionDecks).getQuestionDecks().get("Rock").map(Queue::toJavaList),
+                new Game(questionDecks).getLegacyQuestionDecks().get("Rock"));
     }
 }

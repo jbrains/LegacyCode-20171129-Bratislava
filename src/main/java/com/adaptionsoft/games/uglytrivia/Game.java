@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Game {
-    private final Map<String, Queue<String>> questionDecks;
+    private final Map<String, Queue<String>> nakedQuestionDecks;
     protected int[] places = new int[6];
     ArrayList players = new ArrayList();
     int[] purses = new int[6];
@@ -22,17 +22,19 @@ public class Game {
 
     int currentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
+    private QuestionDecks questionDecks;
 
     public Game() {
         this(new StandardQuestions().getQuestionDecks());
     }
 
-    public Game(final Map<String, Queue<String>> questionDecks) {
-        this.questionDecks = questionDecks;
-        this.popQuestions = new StandardQuestions().convertSafelyToLegacyQuestionDeck("Pop");
-        this.sportsQuestions = new StandardQuestions().convertSafelyToLegacyQuestionDeck("Sports");
-        this.scienceQuestions = new StandardQuestions().convertSafelyToLegacyQuestionDeck("Science");
-        this.rockQuestions = new StandardQuestions().convertSafelyToLegacyQuestionDeck("Rock");
+    public Game(final Map<String, Queue<String>> nakedQuestionDecks) {
+        this.nakedQuestionDecks = nakedQuestionDecks;
+        this.questionDecks = new QuestionDecks(nakedQuestionDecks);
+        this.popQuestions = questionDecks.convertSafelyToLegacyQuestionDeck("Pop");
+        this.sportsQuestions = questionDecks.convertSafelyToLegacyQuestionDeck("Sports");
+        this.scienceQuestions = questionDecks.convertSafelyToLegacyQuestionDeck("Science");
+        this.rockQuestions = questionDecks.convertSafelyToLegacyQuestionDeck("Rock");
     }
 
     public Map<String, LinkedList<String>> getLegacyQuestionDecks() {
@@ -269,6 +271,6 @@ public class Game {
     }
 
     public Map<String, Queue<String>> getQuestionDecks() {
-        return questionDecks;
+        return nakedQuestionDecks;
     }
 }
