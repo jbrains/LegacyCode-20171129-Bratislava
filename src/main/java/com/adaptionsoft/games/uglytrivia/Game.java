@@ -131,12 +131,7 @@ public class Game {
     }
 
     private void advanceCurrentPlayerBy(final int roll) {
-        places = newPlacesAfterAdvancingPlayerBy(roll, currentPlayer, places);
-    }
-
-    public static int[] newPlacesAfterAdvancingPlayerBy(final int roll, final int playerIndex, final int[] places) {
-        places[playerIndex] = advancePlayerAroundBoardBy(places[playerIndex], roll);
-        return places;
+        places[currentPlayer] = advancePlayerAroundBoardBy(places[currentPlayer], roll);
     }
 
     public static int advancePlayerAroundBoardBy(final int fromPlace, final int roll) {
