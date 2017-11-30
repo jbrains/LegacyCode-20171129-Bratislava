@@ -80,9 +80,10 @@ public class Game {
         return players.size();
     }
 
+    // REFACTOR It would be nice if currentPlayer and players
+    // didn't change during a single invocation of this method!
     public void roll(int roll) {
-        onTurnStarted((String) players.get(currentPlayer));
-        onCurrentPlayerRolled(roll);
+        onTurnStarted((String) players.get(currentPlayer), roll);
 
         if (isCurrentPlayerInPenaltyBox()) {
             if (getsOutOfThePenaltyBoxWhenRolling(roll)) {
@@ -98,6 +99,11 @@ public class Game {
             advanceCurrentPlayerBy(roll);
             askQuestionToCurrentPlayer();
         }
+    }
+
+    private void onTurnStarted(final String playerName, final int roll) {
+        reportCurrentPlayerName(playerName);
+        reportPlayerHasRolled(playerName, roll);
     }
 
     private void askQuestionToCurrentPlayer() {
@@ -145,12 +151,15 @@ public class Game {
         return inPenaltyBox[currentPlayer];
     }
 
-    // SMELL Temporal coupling: "current"
-    private void onCurrentPlayerRolled(final int roll) {
+    private void reportPlayerHasRolled(final String playerName, final int roll) {
         reportMessage("They have rolled a " + roll);
     }
 
     private void onTurnStarted(final String currentPlayerName) {
+        reportCurrentPlayerName(currentPlayerName);
+    }
+
+    private void reportCurrentPlayerName(final String currentPlayerName) {
         reportMessage(currentPlayerName + " is the current player");
     }
 
