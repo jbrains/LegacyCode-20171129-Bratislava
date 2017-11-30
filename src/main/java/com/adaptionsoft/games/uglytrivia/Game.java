@@ -131,8 +131,13 @@ public class Game {
     }
 
     private void advanceCurrentPlayerBy(final int roll) {
-        places[currentPlayer] = places[currentPlayer] + roll;
-        if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+        places = newPlacesAfterAdvancingPlayerBy(roll, currentPlayer, places);
+    }
+
+    private int[] newPlacesAfterAdvancingPlayerBy(final int roll, final int playerIndex, final int[] places) {
+        places[playerIndex] = places[playerIndex] + roll;
+        if (places[playerIndex] > 11) places[playerIndex] = places[playerIndex] - 12;
+        return places;
     }
 
     private void onPlayerGettingOutOfThePenaltyBox(final String playerName) {
